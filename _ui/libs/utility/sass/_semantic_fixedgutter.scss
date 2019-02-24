@@ -1,0 +1,117 @@
+/////////////////////////////////////////////
+// Modified https://github.com/tylertate/semantic.gs for SCSS
+// Supports fluid columns with fixed gutters
+/////////////////////////////////////////////
+
+// Defaults which you can freely override
+$column-width: 60px;
+$gutter-width: 20px;
+$columns: 12;
+
+// Fixed gutter defaults which you can freely override
+$desktop-gutter: 30px;
+$tablet-gutter: 20px;
+$smartphone-gutter: 10px;
+
+// Set $total-width to 100% for a fluid layout
+$total-width: gridsystem-width($columns);
+
+// Utility functions — you should never need to modify these
+@function fixed-gridsystem-width($columns:$columns) {
+    @return ($column-width * $columns);
+}
+@function gridsystem-width($columns:$columns) {
+    @return ($column-width * $columns) + ($gutter-width * $columns);
+}
+
+
+//////////
+// GRID //
+//////////
+
+body {
+    width: 100%;
+    @include sr-clearfix();
+}
+
+@mixin row($columns:$columns) {
+    $percentage: $total-width * ((fixed-gridsystem-width($columns))/fixed-gridsystem-width($columns));
+    @include sr-clearfix();
+    display: block;
+    
+    // Fluid gutter (for browsers without calc() support)
+    width: $total-width*(($gutter-width + gridsystem-width($columns))/gridsystem-width($columns));    
+    // Fixed gutter (for browsers with calc() support)
+    width: calc(#{$percentage} + #{$desktop-gutter});
+    // Fluid gutter (for browsers without calc() support)    
+    margin: 0 $total-width*((($gutter-width*.5)/gridsystem-width($columns))*-1);    
+    // Fixed gutter (for browsers with calc() support)
+    margin: 0 calc(-1*#{$desktop-gutter}/2);
+    
+    @include sr-respond-to(tablet) {
+        width: calc(#{$percentage} + #{$tablet-gutter});
+        margin: 0 calc(-1*#{$tablet-gutter}/2);
+    }    
+    @include sr-respond-to(smartphone) {
+        width: calc(#{$percentage} + #{$smartphone-gutter});
+        margin: 0 calc(-1*#{$smartphone-gutter}/2);
+    }
+}
+
+@mixin column($x,$columns:$columns) {
+    $percentage: $total-width*(($column-width*$x)/fixed-gridsystem-width($columns));
+    display: inline;
+    float: left;
+
+    // Fluid gutter (for browsers without calc() support)
+    width: $total-width*(((($gutter-width+$column-width)*$x)-$gutter-width) / gridsystem-width($columns));  
+    // Fixed gutter (for browsers with calc() support)  
+    width: calc(#{$percentage} - #{$desktop-gutter});
+    // Fluid gutter (for browsers without calc() support)
+    margin: 0 $total-width*(($gutter-width*.5)/gridsystem-width($columns));    
+    // Fixed gutter (for browsers with calc() support)
+    margin: 0 calc(#{$desktop-gutter}/2);    
+    
+    @include sr-respond-to(tablet) {
+        width: calc(#{$percentage} - #{$tablet-gutter});
+        margin: 0 calc(#{$tablet-gutter}/2);
+    }    
+    @include sr-respond-to(smartphone) {
+        width: calc(#{$percentage} - #{$smartphone-gutter});
+        margin: 0 calc(#{$smartphone-gutter}/2);
+    }
+}
+
+@mixin push($offset:1) {
+    margin-left: $total-width*((($gutter-width+$column-width)*$offset) / gridsystem-width($columns)) + $total-width*(($gutter-width*.5)/gridsystem-width($columns)) !important;
+    
+    // Fixed columns
+    $gridsystem-width: fixed-gridsystem-width($columns);
+    $column-margin: $total-width * ($column-width*$offset) / $gridsystem-width;
+    margin-left: calc(#{$column-margin} + (#{$desktop-gutter}/2)) !important;
+    
+    @include sr-respond-to(tablet) {
+        margin-left: calc(#{$column-margin} + (#{$tablet-gutter}/2)) !important;
+    }
+    
+    @include sr-respond-to(smartphone) {
+        margin-left: calc(#{$column-margin} + (#{$smartphone-gutter}/2)) !important;
+    }
+}
+
+@mixin pull($offset:1) {
+    margin-right: $total-width*((($gutter-width+$column-width)*$offset) / gridsystem-width($columns)) + $total-width*(($gutter-width*.5)/gridsystem-width($columns)) !important;
+    
+    // Fixed columns
+    $gridsystem-width: fixed-gridsystem-width($columns);
+    $column-margin: $total-width * ($column-width*$offset) / $gridsystem-width;
+    margin-right: calc(#{$column-margin} + (#{$desktop-gutter}/2)) !important;
+    
+    @include sr-respond-to(tablet) {
+        margin-right: calc(#{$column-margin} + (#{$tablet-gutter}/2)) !important;
+    }
+    
+    @include sr-respond-to(smartphone) {
+        margin-right: calc(#{$column-margin} + (#{$smartphone-gutter}/2)) !important;
+    }
+}

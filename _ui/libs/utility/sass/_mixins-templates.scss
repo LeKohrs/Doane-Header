@@ -1,0 +1,70 @@
+/* --------------------------------------------------------------------------------
+ * MIXIN TEMPLATES: This file is not meant to be imported into your actual project.
+   It simply serves as a place to copy + paste some mixins from into your project's
+   own _mixins.scss file.
+ * -------------------------------------------------------------------------------- */
+
+/* --------------------------
+ * MEDIA QUERIES
+ * -------------------------- */
+
+@mixin respond-to($media) {
+    @if $media == smartphone-portrait {
+        @media only screen and (max-width : 400px) { @content; }
+    }
+    @else if $media == smartphone {
+        @media only screen and (max-width : 600px) { @content; }
+    }
+    @else if $media == tablet-portrait {
+        @media only screen and (max-width : 768px) { @content; }
+    }    
+    @else if $media == tablet {
+        @media only screen and (max-width : 1024px) { @content; }
+    }
+    @else if $media == desktop {
+        @media only screen and (min-width: 1025px) { @content; }
+    }
+    @else if $media == large-desktop {
+        @media only screen and (min-width: 1600px) { @content; }
+    }
+    @else if $media == retina {
+        @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) { @content; }
+    }
+    @else {
+        @media only screen and (max-width: $media) { @content; }
+    }
+}
+
+
+/* --------------------------
+ * RETINA MEDIA QUERY
+ * -------------------------- */
+ 
+@mixin retina-media-query() {
+    .backgroundsize & {
+        @content;
+    }
+     
+    @media only screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 1300px),
+           only screen and (min--moz-device-pixel-ratio: 2) and (min-width: 1300px),
+           only screen and (-o-min-device-pixel-ratio: 2/1) and (min-width: 1300px),
+           screen and (min-device-pixel-ratio: 2) and (min-width: 1300px),
+           screen and (min-resolution: 192dpi) and (min-width: 1300px),
+           screen and (min-resolution: 2dppx)  and (min-width: 1300px) {
+               @content;
+    }
+}
+ 
+ 
+/* --------------------------
+ * SPRITE
+ * -------------------------- */
+ 
+@mixin sprite($background-position) {
+    background: url(../img/sprite-1x.png) $background-position no-repeat;
+     
+    @include retina-media-query() {
+        background: url(../img/sprite-2x.png) $background-position no-repeat;
+        background-size: 890px 1188px;
+    }   
+}

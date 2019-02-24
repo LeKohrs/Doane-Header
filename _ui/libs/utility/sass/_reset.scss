@@ -1,0 +1,87 @@
+/**
+ * CSS Reset
+ * 
+ * @media    screen
+ * @author   Quiller Caudill
+ * @version  0.1
+ * @desc     Based on YUI Reset: http://developer.yahoo.com/yui/reset/
+ */
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td {
+    margin: 0;
+    padding: 0;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+fieldset, img {
+    border: 0 none;
+}
+address, caption, cite, code, dfn, em, strong, th, var, optgroup {
+    font-style: inherit;
+    font-weight: inherit;
+}
+del, ins {
+    text-decoration: none;
+}
+li {
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+}
+caption, th {
+    text-align: left;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+input, button, textarea, select, optgroup, option {
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+}
+sup, sub {
+    vertical-align: baseline;
+}
+
+/**
+ * @section Classes
+ */
+.clear {
+    clear: both;
+}
+.clear-left {
+    clear: left;
+}
+.clear-right {
+    clear: right;
+}
+.hidden, html.js .noscript {
+    display: none;
+}
+.nowrap {
+    white-space: nowrap;
+}
+
+/**
+ * @section Mozilla
+ * @purpose Target Mozilla-based browsers with unique rules
+ */
+a:focus, object:focus, param:focus {
+    -moz-outline-style: none;
+    outline-style: none;
+}
+button::-moz-focus-inner{
+    padding:0;
+    border:0;
+}
+*:focus {
+    outline: none;
+}

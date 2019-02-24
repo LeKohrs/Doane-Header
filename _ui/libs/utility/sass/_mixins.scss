@@ -1,0 +1,316 @@
+// Gradient
+@mixin sr-gradient($start, $end) {
+    background: $start; /* Old browsers */
+    background: -moz-linear-gradient(top, $start 0%, $end 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$start), color-stop(100%,$end)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, $start 0%,$end 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, $start 0%,$end 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, $start 0%,$end 100%); /* IE10+ */
+    background: linear-gradient(to bottom, $start 0%,$end 100%); /* W3C */
+}
+@mixin sr-horizontal-gradient($start, $end) {
+    background: $start; /* Old browsers */
+    background: -moz-linear-gradient(left, $start 0%, $end 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left left, left right, color-stop(0%,$start), color-stop(100%,$end)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left, $start 0%,$end 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left, $start 0%,$end 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left, $start 0%,$end 100%); /* IE10+ */
+    background: linear-gradient(to right, $start 0%,$end 100%); /* W3C */
+}
+@mixin sr-radial-gradient($start, $end){
+    background: $start;
+    background: -moz-radial-gradient(center, ellipse cover,  $start 23%, $end 99%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(23%,$start), color-stop(99%,$end));
+    background: -webkit-radial-gradient(center, ellipse cover,  $start 23%,$end 99%);
+    background: -o-radial-gradient(center, ellipse cover,  $start 23%,$end 99%);
+    background: -ms-radial-gradient(center, ellipse cover,  $start 23%,$end 99%);
+    background: radial-gradient(ellipse at center,  $start 23%,$end 99%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$start', endColorstr='$end',GradientType=1 );
+}
+
+// Box Shadows
+@mixin sr-box-shadow($top, $left, $blur, $color, $inset: "") {
+    -webkit-box-shadow: $top $left $blur $color #{$inset};
+    -moz-box-shadow: $top $left $blur $color #{$inset};
+    box-shadow: $top $left $blur $color #{$inset};
+}
+
+// Transitions
+@mixin sr-transition($delay) {
+    -webkit-font-smoothing: antialiased;
+    -o-transition: $delay;
+    -ms-transition: $delay;
+    -moz-transition: $delay;
+    -webkit-transition: $delay;
+    transition: $delay;
+}
+
+// Box Sizing
+@mixin sr-box-sizing($val) {
+    box-sizing: $val;
+    -webkit-box-sizing: $val;
+    -moz-box-sizing: $val;
+}
+
+// Rounded Borders
+@mixin sr-border-radius($radius, $color: null) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    border-radius: $radius;
+
+    @if $color != null {
+        border: 1px solid $color;
+    }
+}
+
+// Hide inline text
+@mixin sr-hide-text() {
+    overflow: hidden;
+    text-indent: 100%;
+    white-space: nowrap;
+}
+
+// :before and :after pseudo elements
+@mixin sr-before-after() {
+    position: absolute;
+    content: "";
+    @include sr-hide-text();
+}
+
+// Automatically clear all floated children
+// Blatantly stolen and adapted to SASS from: http://nicolasgallagher.com/micro-clearfix-hack/
+@mixin sr-clearfix() {
+    &:before,
+    &:after {
+        content: " ";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+    // For IE 6/7 only
+    & {
+        *zoom: 1;
+    }
+}
+
+// Media Queries
+@mixin sr-respond-to($media) {
+  @if $media == smartphone {
+    @media only screen and (max-width : 600px) { @content; }
+  }
+  @else if $media == smartphone-landscape {
+    @media only screen and (min-width : 401px) and (max-width : 600px) { @content; }
+  }
+  @else if $media == smartphone-portrait {
+    @media only screen and (max-width : 400px) { @content; }
+  }
+  @else if $media == tablet {
+    @media only screen and (min-width : 601px) and (max-width : 1024px) { @content; }
+  }
+  @else if $media == tablet-landscape {
+    @media only screen and (min-width : 769px) and (max-width : 1024px) and (orientation : landscape) { @content; }
+  }
+  @else if $media == tablet-portrait {
+    @media only screen and (min-width : 601px) and (max-width : 768px) and (orientation : portrait) { @content; }
+  }
+  @else if $media == tablet-and-below {
+    @media only screen and (max-width : 1024px) { @content; }
+  }
+  @else if $media == tablet-portrait-and-below {
+    @media only screen and (max-width : 768px) and (orientation : portrait) { @content; }
+  }
+  @else if $media == desktop {
+    @media only screen and (min-width: 1025px) { @content; }
+  }
+  @else {
+    @media only screen and (min-width: $media) { @content; }
+  }
+}
+
+// TypeKit document classes
+@mixin sr-typekit() {
+    &,
+    html.wf-loading & {
+        visibility: hidden;
+    }
+    html.wf-active &,
+    html.wf-inactive &,
+    html.no-js & {
+        visibility: visible;
+    }
+}
+
+// Web font builder
+@mixin sr-web-font($font, $weight, $style: normal) {
+    & {
+        font-family: $font;
+        font-weight: $weight;
+        font-style: $style;
+        visibility: hidden;
+        -webkit-font-smoothing: antialiased;
+        -webkit-text-size-adjust: none;
+        text-rendering: optimizeLegibility;
+    }
+    html.wf-loading & {
+        visibility: hidden;
+    }
+    html.wf-active &,
+    html.wf-inactive &,
+    html.no-js & {
+        visibility: visible;
+    }
+    html.ie7 & {
+        visibility: visible;
+    }
+}
+
+// Force hardware accleration
+@mixin sr-hardware-acceleration() {
+    -moz-transform: translate3d(0,0,0); /* Firefox 4 */
+    -webkit-transform: translate3d(0,0,0); /* Safari and Chrome */
+    -o-transform: translate3d(0,0,0); /* Opera */
+    -ms-transform: translate3d(0,0,0); /* IExplorer 10 */
+    transform: translate3d(0,0,0);
+}
+
+// Placeholder text color
+@mixin sr-placeholder() {
+    &:-moz-placeholder {
+        @content;
+    }
+    &::-moz-placeholder {
+        @content;
+    }
+    &::-webkit-input-placeholder {
+        @content;
+    }
+    &:-ms-input-placeholder {
+        @content;
+    }
+}
+
+// Placeholder
+@mixin sr-vendor-prefix($property, $value) {
+    -webkit-#{$property}: $value;
+    -moz-#{$property}: $value;
+    -o-#{$property}: $value;
+    -ms-#{$property}: $value;
+    #{$property}: $value;
+}
+
+// Vertically Center
+@mixin sr-vertically-center() {
+    @include sr-vendor-prefix(transform, translateY(-50%));
+    position: relative;
+    top: 50%;
+}
+
+/* --------------------------
+ * RESPONSIVE FONT SIZE
+ * -------------------------- */
+
+/// Viewport sized typography with minimum and maximum values
+///
+/// @author Eduardo Boucas (@eduardoboucas)
+///
+/// @param {Number}   $responsive  - Viewport-based size
+/// @param {Number}   $min         - Minimum font size (px)
+/// @param {Number}   $max         - Maximum font size (px)
+///                                  (optional)
+/// @param {Number}   $fallback    - Fallback for viewport-
+///                                  based units (optional)
+///
+/// @example scss - 5vw font size (with 50px fallback), 
+///                 minumum of 35px and maximum of 150px
+///  @include responsive-font(5vw, 35px, 150px, 50px);
+
+@mixin sr-responsive-font($responsive, $min, $max: false, $fallback: false) {
+  $responsive-unitless: $responsive / ($responsive - $responsive + 1);
+  $dimension: if(unit($responsive) == 'vh', 'height', 'width');
+  $min-breakpoint: $min / $responsive-unitless * 100;
+  
+  @media (max-#{$dimension}: #{$min-breakpoint}) {
+    font-size: $min;
+  }
+  
+  @if $max {
+    $max-breakpoint: $max / $responsive-unitless * 100;
+    
+    @media (min-#{$dimension}: #{$max-breakpoint}) {
+      font-size: $max;
+    }
+  }
+  
+  @if $fallback {
+    font-size: $fallback;
+  }
+  
+  font-size: $responsive;
+}
+
+
+/* --------------------------
+ * RESPONSIVE LINE HEIGHT SIZE
+ * -------------------------- */
+
+@mixin sr-responsive-line-height($responsive, $min, $max: false, $fallback: false) {
+  $responsive-unitless: $responsive / ($responsive - $responsive + 1);
+  $dimension: if(unit($responsive) == 'vh', 'height', 'width');
+  $min-breakpoint: $min / $responsive-unitless * 100;
+  
+  @media (max-#{$dimension}: #{$min-breakpoint}) {
+    line-height: $min;
+  }
+  
+  @if $max {
+    $max-breakpoint: $max / $responsive-unitless * 100;
+    
+    @media (min-#{$dimension}: #{$max-breakpoint}) {
+      line-height: $max;
+    }
+  }
+  
+  @if $fallback {
+    line-height: $fallback;
+  }
+  
+  line-height: $responsive;
+}
+
+/* --------------------------
+ * KEYFRAMES & ANIMATION
+ * -------------------------- */
+
+@mixin sr-keyframes($animationName) {
+    @-webkit-keyframes #{$animationName} {
+        @content;
+    }
+    @-moz-keyframes #{$animationName} {
+        @content;
+    }
+    @-o-keyframes #{$animationName} {
+        @content;
+    }
+    @keyframes #{$animationName} {
+        @content;
+    }
+}
+
+@mixin sr-animation($animate...) {
+    $max: length($animate);
+    $animations: '';
+
+    @for $i from 1 through $max {
+        $animations: #{$animations + nth($animate, $i)};
+
+        @if $i < $max {
+            $animations: #{$animations + ", "};
+        }
+    }
+    -webkit-animation: $animations;
+    -moz-animation:    $animations;
+    -o-animation:      $animations;
+    animation:         $animations;
+}
+
