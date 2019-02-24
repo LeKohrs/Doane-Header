@@ -17,13 +17,20 @@ const subMenu = () => {
 
     for(let menu of menuItems) {
         let subMenuClass;
-        menu.addEventListener("mouseover", (e) => {
+        let subMenus = document.getElementsByClassName('sub-menus')[0];
+        menu.addEventListener("click", (e) => {
             e.preventDefault;
+            for(let menu of menuItems) {
+                menu.classList.remove('active');            
+            }
             for(let cl of menu.classList) {
                 if(cl.startsWith('menu__item--')) {
                     menu.classList.add('active');
                     let subMenuClass = cl.replace('menu__item', 'sub-menu');
                     showSubMenu(subMenuClass);
+                    if (subMenus.classList.contains('active')) {
+                        closeSubMenu(subMenuClass, subMenus);
+                    }
                 }
             }
         });
@@ -47,5 +54,20 @@ const showSubMenu = (className) => {
     }
     subMenuItem.classList.add('show');
     subMenus.classList.add('active');
+
+    
 }
 
+const closeSubMenu = (childClass, parent) => {
+    console.log('yo!');
+
+    document.addEventListener('click', function (e) {
+        let child = document.getElementsByClassName(childClass)[0];
+        var el = e.target.closest('.sub-menus');
+        if (!el) {
+            console.log('yo!');
+            // parent.classList.remove('active');
+            // child.classList.remove('show');
+        }
+    });
+}
