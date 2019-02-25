@@ -1,6 +1,7 @@
 window.onload = () => { 
     search();
     subMenu();
+    mobileIcon();
 }
 
 const search = () => {
@@ -9,6 +10,7 @@ const search = () => {
 
     searchIcon.addEventListener("click", () => {
         searchForm.classList.toggle('show');
+        searchIcon.classList.toggle('active');
     });
 }
 
@@ -28,19 +30,9 @@ const subMenu = () => {
                     menu.classList.add('active');
                     let subMenuClass = cl.replace('menu__item', 'sub-menu');
                     showSubMenu(subMenuClass);
-                    if (subMenus.classList.contains('active')) {
-                        closeSubMenu(subMenuClass, subMenus);
-                    }
                 }
             }
         });
-        // window.addEventListener("click", (e) => {
-        //     e.preventDefault;
-        //         if (e.currentTarget !== 'sub-menus') {
-        //             let menu = document.querySelector('.sub-menu.show');
-        //             menu.remove
-        //         }
-        // });
     }
 }
 
@@ -54,20 +46,16 @@ const showSubMenu = (className) => {
     }
     subMenuItem.classList.add('show');
     subMenus.classList.add('active');
-
-    
 }
 
-const closeSubMenu = (childClass, parent) => {
-    console.log('yo!');
+const mobileIcon = () => {
+    let mobileIcon = document.getElementsByClassName('mobile-menu')[0];
+    let subMenus = document.getElementsByClassName('sub-menus')[0];
 
-    document.addEventListener('click', function (e) {
-        let child = document.getElementsByClassName(childClass)[0];
-        var el = e.target.closest('.sub-menus');
-        if (!el) {
-            console.log('yo!');
-            // parent.classList.remove('active');
-            // child.classList.remove('show');
-        }
-    });
+    if(mobileIcon) {
+        mobileIcon.addEventListener('click', () => {
+            mobileIcon.classList.toggle('active');
+            subMenus.classList.toggle('active');
+        })
+    }
 }

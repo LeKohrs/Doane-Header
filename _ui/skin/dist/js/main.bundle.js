@@ -24,6 +24,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 window.onload = function () {
   search();
   subMenu();
+  mobileIcon();
 };
 
 var search = function search() {
@@ -31,6 +32,7 @@ var search = function search() {
   var searchForm = document.getElementsByClassName('search__form')[0];
   searchIcon.addEventListener("click", function () {
     searchForm.classList.toggle('show');
+    searchIcon.classList.toggle('active');
   });
 };
 
@@ -86,10 +88,6 @@ var subMenu = function subMenu() {
               var _subMenuClass = cl.replace('menu__item', 'sub-menu');
 
               showSubMenu(_subMenuClass);
-
-              if (subMenus.classList.contains('active')) {
-                closeSubMenu(_subMenuClass, subMenus);
-              }
             }
           }
         } catch (err) {
@@ -106,13 +104,7 @@ var subMenu = function subMenu() {
             }
           }
         }
-      }); // window.addEventListener("click", (e) => {
-      //     e.preventDefault;
-      //         if (e.currentTarget !== 'sub-menus') {
-      //             let menu = document.querySelector('.sub-menu.show');
-      //             menu.remove
-      //         }
-      // });
+      });
     };
 
     for (var _iterator = menuItems[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
@@ -167,17 +159,16 @@ var showSubMenu = function showSubMenu(className) {
   subMenus.classList.add('active');
 };
 
-var closeSubMenu = function closeSubMenu(childClass, parent) {
-  console.log('yo!');
-  document.addEventListener('click', function (e) {
-    var child = document.getElementsByClassName(childClass)[0];
-    var el = e.target.closest('.sub-menus');
+var mobileIcon = function mobileIcon() {
+  var mobileIcon = document.getElementsByClassName('mobile-menu')[0];
+  var subMenus = document.getElementsByClassName('sub-menus')[0];
 
-    if (!el) {
-      console.log('yo!'); // parent.classList.remove('active');
-      // child.classList.remove('show');
-    }
-  });
+  if (mobileIcon) {
+    mobileIcon.addEventListener('click', function () {
+      mobileIcon.classList.toggle('active');
+      subMenus.classList.toggle('active');
+    });
+  }
 };
 
 /***/ })
