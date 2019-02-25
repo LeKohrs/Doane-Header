@@ -187,7 +187,11 @@
         .search {
             padding-bottom: 20px; 
             margin-left: 16px;
-            transform: translateY(20px);
+            transform: translateY(24px);
+
+            @include respond-to(tablet-and-below) {
+                transform: translateY(20px);
+            }
 
             &:after {
                 content: "";
